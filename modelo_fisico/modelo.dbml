@@ -1,0 +1,212 @@
+// Sistema de Manutenção de Computadores - Modelo físico (SQL Server)
+// Escopo fechado: 17 tabelas
+
+Table cliente {
+  id_cliente int [pk, increment]
+  nome varchar(100) [not null]
+  cpf char(11) [not null, note: 'só números']
+  email varchar(100)
+  telefone varchar(15)
+  dt_cadastro date [not null, default: `CAST(GETDATE() AS date)`]
+
+  indexes {
+    cpf [unique, name: 'ux_cliente_cpf']
+  }
+}
+
+Table tipo_equipamento {
+  id_tipo_equipamento tinyint [pk, increment]
+  nome varchar(30) [not null, note: 'notebook, desktop, all-in-one...']
+
+  indexes {
+    nome [unique, name: 'ux_tipo_equipamento_nome']
+  }
+}
+
+Table marca {
+  id_marca smallint [pk, increment]
+  nome varchar(50) [not null, note: 'Dell, Lenovo, Acer...']
+
+  indexes {
+    nome [unique, name: 'ux_marca_nome']
+  }
+}
+
+Table equipamento {
+  id_equipamento int [pk, increment]
+  id_cliente int [not null, ref: > cliente.id_cliente]
+  id_tipo_equipamento tinyint [not null, ref: > tipo_equipamento.id_tipo_equipamento]
+  id_marca smallint [not null, ref: > marca.id_marca]
+  modelo varchar(60) [not null]
+  numero_serie varchar(50) [note: 'identifica o equipamento fisicamente']
+  dt_cadastro date [not null, default: `CAST(GETDATE() AS date)`]
+  observacao varchar(200) [note: 'estado geral e acessórios entregues']
+
+  indexes {
+    numero_serie [unique, name: 'ux_equipamento_numero_serie']
+    id_cliente [name: 'ix_equipamento_cliente']
+    id_tipo_equipamento [name: 'ix_equipamento_tipo']
+    id_marca [name: 'ix_equipamento_marca']
+  }
+}
+
+Table status_os {
+  id_status_os tinyint [pk, increment]
+  descricao varchar(30) [not null, note: 'aberta, em análise, aguardando peça, concluída, cancelada']
+
+  indexes {
+    descricao [unique, name: 'ux_status_os_descricao']
+  }
+}
+
+Table tecnico {
+  id_tecnico smallint [pk, increment]
+  nome varchar(100) [not null]
+  cpf char(11) [not null, note: 'só números']
+  especialidade varchar(50) [note: 'hardware, software, redes']
+  dt_admissao date [not null]
+  ativo bit [not null, default: 1, note: '1 = ativo, 0 = inativo']
+
+  indexes {
+    cpf [unique, name: 'ux_tecnico_cpf']
+  }
+}
+
+Table ordem_servico {
+  id_ordem_servico int [pk, increment]
+  id_equipamento int [not null, ref: > equipamento.id_equipamento]
+  id_tecnico smallint [ref: > tecnico.id_tecnico]
+  id_status_os tinyint [not null, default: 1, ref: > status_os.id_status_os]
+  dt_abertura datetime [not null, default: `GETDATE()`, note: 'entrada do equipamento']
+  dt_conclusao datetime [note: 'nulo até concluir. CHECK (dt_conclusao >= dt_abertura)']
+  defeito_relatado varchar(300) [not null, note: 'problema informado pelo cliente']
+
+  indexes {
+    id_equipamento [name: 'ix_os_equipamento']
+    id_tecnico [name: 'ix_os_tecnico']
+    id_status_os [name: 'ix_os_status']
+  }
+}
+
+Table servico {
+  id_servico smallint [pk, increment]
+  descricao varchar(100) [not null]
+  valor_base decimal(10,2) [not null, note: 'preço padrão. CHECK (valor_base >= 0)']
+  tempo_estimado_min smallint [note: 'tempo estimado em minutos']
+
+  indexes {
+    descricao [unique, name: 'ux_servico_descricao']
+  }
+}
+
+Table os_servico {
+  id_ordem_servico int [not null, ref: > ordem_servico.id_ordem_servico]
+  id_servico smallint [not null, ref: > servico.id_servico]
+  quantidade tinyint [not null, default: 1, note: 'CHECK (quantidade > 0)']
+  valor_cobrado decimal(10,2) [not null, note: 'pode diferir do valor_base']
+
+  indexes {
+    (id_ordem_servico, id_servico) [pk, name: 'pk_os_servico']
+    id_servico [name: 'ix_os_servico_servico']
+  }
+}
+
+Table fornecedor {
+  id_fornecedor int [pk, increment]
+  nome varchar(100) [not null]
+  cnpj char(14) [not null, note: 'só números']
+  telefone varchar(15)
+  email varchar(150)
+  endereco varchar(150)
+  estado char(2) [note: 'sigla da UF']
+  dt_cadastro date [not null, default: `CAST(GETDATE() AS date)`]
+
+  indexes {
+    cnpj [unique, name: 'ux_fornecedor_cnpj']
+  }
+}
+
+Table categoria_peca {
+  id_categoria_peca tinyint [pk, increment]
+  nome varchar(50) [not null, note: 'memória RAM, SSD, HD, fonte, placa-mãe...']
+
+  indexes {
+    nome [unique, name: 'ux_categoria_peca_nome']
+  }
+}
+
+Table peca {
+  id_peca int [pk, increment]
+  id_fornecedor int [not null, ref: > fornecedor.id_fornecedor]
+  id_categoria_peca tinyint [not null, ref: > categoria_peca.id_categoria_peca]
+  nome varchar(100) [not null]
+  preco decimal(10,2) [not null, note: 'preço de venda. CHECK (preco >= 0)']
+  estoque_atual int [not null, default: 0, note: 'CHECK (estoque_atual >= 0)']
+  estoque_minimo int [not null, default: 0, note: 'quantidade mínima antes de repor']
+  dt_cadastro date [not null, default: `CAST(GETDATE() AS date)`]
+
+  indexes {
+    id_fornecedor [name: 'ix_peca_fornecedor']
+    id_categoria_peca [name: 'ix_peca_categoria']
+  }
+}
+
+Table os_peca {
+  id_ordem_servico int [not null, ref: > ordem_servico.id_ordem_servico]
+  id_peca int [not null, ref: > peca.id_peca]
+  quantidade smallint [not null, default: 1, note: 'CHECK (quantidade > 0)']
+  preco_unitario decimal(10,2) [not null, note: 'preço da peça no momento da OS']
+
+  indexes {
+    (id_ordem_servico, id_peca) [pk, name: 'pk_os_peca']
+    id_peca [name: 'ix_os_peca_peca']
+  }
+}
+
+Table forma_pagamento {
+  id_forma_pagamento tinyint [pk, increment]
+  descricao varchar(30) [not null, note: 'dinheiro, pix, cartão de crédito, cartão de débito...']
+
+  indexes {
+    descricao [unique, name: 'ux_forma_pagamento_descricao']
+  }
+}
+
+Table pagamento {
+  id_pagamento int [pk, increment]
+  id_ordem_servico int [not null, ref: > ordem_servico.id_ordem_servico]
+  id_forma_pagamento tinyint [not null, ref: > forma_pagamento.id_forma_pagamento]
+  valor decimal(10,2) [not null, note: 'valor pago. CHECK (valor > 0)']
+  dt_pagamento datetime [not null, default: `GETDATE()`]
+  status tinyint [not null, default: 1, note: '1 = pendente, 2 = pago, 3 = estornado. CHECK (status IN (1,2,3))']
+
+  indexes {
+    id_ordem_servico [name: 'ix_pagamento_os']
+    id_forma_pagamento [name: 'ix_pagamento_forma']
+  }
+}
+
+Table historico_status_os {
+  id_historico int [pk, increment]
+  id_ordem_servico int [not null, ref: > ordem_servico.id_ordem_servico]
+  id_status_anterior tinyint [ref: > status_os.id_status_os, note: 'nulo na abertura']
+  id_status_novo tinyint [not null, ref: > status_os.id_status_os]
+  dt_alteracao datetime [not null, default: `GETDATE()`]
+
+  indexes {
+    (id_ordem_servico, dt_alteracao) [name: 'ix_historico_os_data']
+    id_status_novo [name: 'ix_historico_status']
+  }
+}
+
+Table garantia {
+  id_garantia int [pk, increment]
+  id_ordem_servico int [not null, unique, ref: - ordem_servico.id_ordem_servico, note: 'uma garantia por OS']
+  dt_inicio date [not null, default: `CAST(GETDATE() AS date)`]
+  prazo_dias smallint [not null, default: 90, note: 'CHECK (prazo_dias BETWEEN 1 AND 365)']
+  cobertura varchar(200) [note: 'o que a garantia cobre']
+
+  indexes {
+    id_ordem_servico [unique, name: 'ux_garantia_os']
+  }
+}
