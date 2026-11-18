@@ -1,6 +1,38 @@
 USE manutencao_computadores;
 GO
 
+SET IDENTITY_INSERT cliente ON;
+GO
+INSERT INTO cliente (id_cliente, nome, cpf, email, telefone, dt_cadastro) VALUES
+    (1, 'Lucas Eduardo Mendes', '41829365070', 'lucas.mendes@gmail.com', '48991243810', '2024-03-12'),
+    (2, 'Mariana Costa Silveira', '73491820588', 'mariana.silveira@hotmail.com', '48996127405', '2024-04-08'),
+    (3, 'Carlos Henrique Becker', '29560481711', 'carlos.becker@gmail.com', '48988312094', '2024-05-19'),
+    (4, 'Fernanda Oliveira Rocha', '86142059370', 'fernanda.rocha@outlook.com', '48999456120', '2024-06-03'),
+    (5, 'Thiago Augusto Cardoso', '50917384288', 'thiago.cardoso@gmail.com', '48991875342', '2024-07-15'),
+    (6, 'Juliana Pereira Nunes', '14785932619', 'juliana.nunes@yahoo.com.br', '48998231476', '2024-08-22'),
+    (7, 'Bruno Rafael Machado', '68239410570', 'bruno.machado@gmail.com', '48996548821', '2024-09-10'),
+    (8, 'Aline Cristina Zanetti', '92351746864', 'aline.zanetti@gmail.com', '48991023398', '2024-10-05'),
+    (9, 'Diego Felipe Bortoluzzi', '35806294170', 'diego.bortoluzzi@outlook.com', '48984197750', '2024-11-14'),
+    (10, 'Camila Rodrigues Teixeira', '61472908350', 'camila.teixeira@gmail.com', '48999304612', '2024-12-02'),
+    (11, 'Gustavo Almeida Ferreira', '07943851684', 'gustavo.ferreira@hotmail.com', '48991762984', '2025-01-18'),
+    (12, 'Patrícia Souza Vieira', '54190627801', 'patricia.vieira@gmail.com', '48998415503', '2025-02-09'),
+    (13, 'Eduardo Martins Dal Pont', '83625179482', 'eduardo.dalpont@gmail.com', '48996081937', '2025-03-21'),
+    (14, 'Larissa Gomes Barbosa', '26481593042', 'larissa.barbosa@outlook.com', '48991336429', '2025-04-11'),
+    (15, 'Vinícius Santos Ribeiro', '79034618269', 'vinicius.ribeiro@gmail.com', '48988749015', '2025-05-27'),
+    (16, 'Beatriz Lopes Fernandes', '45318760910', 'beatriz.fernandes@gmail.com', '48999123784', '2025-06-16'),
+    (17, 'Matheus Henrique Duarte', '91862043515', 'matheus.duarte@hotmail.com', '48996478210', '2025-07-04'),
+    (18, 'Renata Carvalho Medeiros', '30759281432', 'renata.medeiros@gmail.com', '48991594063', '2025-08-19'),
+    (19, 'Fábio Júnior Bastos', '67204195876', NULL, '48984621190', '2025-09-07'),
+    (20, 'Vanessa Dias Gonçalves', '18593470297', 'vanessa.goncalves@outlook.com', '48998857341', '2025-10-23'),
+    (21, 'Rodrigo César Nogueira', '52976038465', 'rodrigo.nogueira@gmail.com', '47991426809', '2025-11-15'),
+    (22, 'Tatiane Freitas Monteiro', '84610925702', 'tatiane.monteiro@gmail.com', '48996214930', '2026-01-12'),
+    (23, 'Henrique Morais Antunes', '09348261533', 'henrique.antunes@gmail.com', '48999742258', '2026-02-20'),
+    (24, 'Bianca Castro Siqueira', '71582304904', 'bianca.siqueira@hotmail.com', '48991908416', DEFAULT),
+    (25, 'André Luiz Bitencourt', '36027491850', 'andre.bitencourt@gmail.com', '48988153672', DEFAULT);
+GO
+SET IDENTITY_INSERT cliente OFF;
+GO
+
 SET IDENTITY_INSERT tipo_equipamento ON;
 GO
 INSERT INTO tipo_equipamento (id_tipo_equipamento, nome) VALUES
@@ -82,92 +114,6 @@ GO
 SET IDENTITY_INSERT status_os OFF;
 GO
 
-SET IDENTITY_INSERT forma_pagamento ON;
-GO
-INSERT INTO forma_pagamento (id_forma_pagamento, descricao) VALUES
-    (1, 'Dinheiro'),
-    (2, 'Pix'),
-    (3, 'Cartão de Débito'),
-    (4, 'Cartão Crédito à Vista'),
-    (5, 'Cartão Crédito 2x'),
-    (6, 'Cartão Crédito 3x'),
-    (7, 'Cartão Crédito 4x'),
-    (8, 'Cartão Crédito 5x'),
-    (9, 'Cartão Crédito 6x'),
-    (10, 'Cartão Crédito 10x'),
-    (11, 'Cartão Crédito 12x'),
-    (12, 'Boleto Bancário'),
-    (13, 'Transferência TED'),
-    (14, 'Transferência DOC'),
-    (15, 'Mercado Pago'),
-    (16, 'PicPay'),
-    (17, 'PayPal'),
-    (18, 'Link de Pagamento'),
-    (19, 'Faturado 30 Dias'),
-    (20, 'Crédito em Loja');
-GO
-SET IDENTITY_INSERT forma_pagamento OFF;
-GO
-
-SET IDENTITY_INSERT categoria_peca ON;
-GO
-INSERT INTO categoria_peca (id_categoria_peca, nome) VALUES
-    (1, 'Memória RAM'),
-    (2, 'SSD NVMe'),
-    (3, 'SSD SATA'),
-    (4, 'HD Interno'),
-    (5, 'Fonte de Alimentação'),
-    (6, 'Placa-Mãe'),
-    (7, 'Processador'),
-    (8, 'Placa de Vídeo'),
-    (9, 'Cooler e Ventoinha'),
-    (10, 'Bateria de Notebook'),
-    (11, 'Tela e Display LCD'),
-    (12, 'Teclado de Notebook'),
-    (13, 'Carregador de Notebook'),
-    (14, 'Pasta Térmica'),
-    (15, 'Gabinete'),
-    (16, 'Placa de Rede Wi-Fi'),
-    (17, 'Cabo Flat'),
-    (18, 'Dobradiça e Carcaça'),
-    (19, 'Conector DC Jack'),
-    (20, 'Adaptador e Caddy');
-GO
-SET IDENTITY_INSERT categoria_peca OFF;
-GO
-
-SET IDENTITY_INSERT cliente ON;
-GO
-INSERT INTO cliente (id_cliente, nome, cpf, email, telefone, dt_cadastro) VALUES
-    (1, 'Lucas Eduardo Mendes', '41829365070', 'lucas.mendes@gmail.com', '48991243810', '2024-03-12'),
-    (2, 'Mariana Costa Silveira', '73491820588', 'mariana.silveira@hotmail.com', '48996127405', '2024-04-08'),
-    (3, 'Carlos Henrique Becker', '29560481711', 'carlos.becker@gmail.com', '48988312094', '2024-05-19'),
-    (4, 'Fernanda Oliveira Rocha', '86142059370', 'fernanda.rocha@outlook.com', '48999456120', '2024-06-03'),
-    (5, 'Thiago Augusto Cardoso', '50917384288', 'thiago.cardoso@gmail.com', '48991875342', '2024-07-15'),
-    (6, 'Juliana Pereira Nunes', '14785932619', 'juliana.nunes@yahoo.com.br', '48998231476', '2024-08-22'),
-    (7, 'Bruno Rafael Machado', '68239410570', 'bruno.machado@gmail.com', '48996548821', '2024-09-10'),
-    (8, 'Aline Cristina Zanetti', '92351746864', 'aline.zanetti@gmail.com', '48991023398', '2024-10-05'),
-    (9, 'Diego Felipe Bortoluzzi', '35806294170', 'diego.bortoluzzi@outlook.com', '48984197750', '2024-11-14'),
-    (10, 'Camila Rodrigues Teixeira', '61472908350', 'camila.teixeira@gmail.com', '48999304612', '2024-12-02'),
-    (11, 'Gustavo Almeida Ferreira', '07943851684', 'gustavo.ferreira@hotmail.com', '48991762984', '2025-01-18'),
-    (12, 'Patrícia Souza Vieira', '54190627801', 'patricia.vieira@gmail.com', '48998415503', '2025-02-09'),
-    (13, 'Eduardo Martins Dal Pont', '83625179482', 'eduardo.dalpont@gmail.com', '48996081937', '2025-03-21'),
-    (14, 'Larissa Gomes Barbosa', '26481593042', 'larissa.barbosa@outlook.com', '48991336429', '2025-04-11'),
-    (15, 'Vinícius Santos Ribeiro', '79034618269', 'vinicius.ribeiro@gmail.com', '48988749015', '2025-05-27'),
-    (16, 'Beatriz Lopes Fernandes', '45318760910', 'beatriz.fernandes@gmail.com', '48999123784', '2025-06-16'),
-    (17, 'Matheus Henrique Duarte', '91862043515', 'matheus.duarte@hotmail.com', '48996478210', '2025-07-04'),
-    (18, 'Renata Carvalho Medeiros', '30759281432', 'renata.medeiros@gmail.com', '48991594063', '2025-08-19'),
-    (19, 'Fábio Júnior Bastos', '67204195876', NULL, '48984621190', '2025-09-07'),
-    (20, 'Vanessa Dias Gonçalves', '18593470297', 'vanessa.goncalves@outlook.com', '48998857341', '2025-10-23'),
-    (21, 'Rodrigo César Nogueira', '52976038465', 'rodrigo.nogueira@gmail.com', '47991426809', '2025-11-15'),
-    (22, 'Tatiane Freitas Monteiro', '84610925702', 'tatiane.monteiro@gmail.com', '48996214930', '2026-01-12'),
-    (23, 'Henrique Morais Antunes', '09348261533', 'henrique.antunes@gmail.com', '48999742258', '2026-02-20'),
-    (24, 'Bianca Castro Siqueira', '71582304904', 'bianca.siqueira@hotmail.com', '48991908416', DEFAULT),
-    (25, 'André Luiz Bitencourt', '36027491850', 'andre.bitencourt@gmail.com', '48988153672', DEFAULT);
-GO
-SET IDENTITY_INSERT cliente OFF;
-GO
-
 SET IDENTITY_INSERT tecnico ON;
 GO
 INSERT INTO tecnico (id_tecnico, nome, cpf, especialidade, dt_admissao, ativo) VALUES
@@ -247,6 +193,60 @@ INSERT INTO fornecedor (id_fornecedor, nome, cnpj, telefone, email, endereco, es
     (20, 'Capixaba Tech Importações Ltda', '71390852000180', '2732226640', 'comercial@capixabatech.com.br', 'Av. Nossa Senhora da Penha, 1495 - Santa Lúcia, Vitória', 'ES', DEFAULT);
 GO
 SET IDENTITY_INSERT fornecedor OFF;
+GO
+
+SET IDENTITY_INSERT categoria_peca ON;
+GO
+INSERT INTO categoria_peca (id_categoria_peca, nome) VALUES
+    (1, 'Memória RAM'),
+    (2, 'SSD NVMe'),
+    (3, 'SSD SATA'),
+    (4, 'HD Interno'),
+    (5, 'Fonte de Alimentação'),
+    (6, 'Placa-Mãe'),
+    (7, 'Processador'),
+    (8, 'Placa de Vídeo'),
+    (9, 'Cooler e Ventoinha'),
+    (10, 'Bateria de Notebook'),
+    (11, 'Tela e Display LCD'),
+    (12, 'Teclado de Notebook'),
+    (13, 'Carregador de Notebook'),
+    (14, 'Pasta Térmica'),
+    (15, 'Gabinete'),
+    (16, 'Placa de Rede Wi-Fi'),
+    (17, 'Cabo Flat'),
+    (18, 'Dobradiça e Carcaça'),
+    (19, 'Conector DC Jack'),
+    (20, 'Adaptador e Caddy');
+GO
+SET IDENTITY_INSERT categoria_peca OFF;
+GO
+
+SET IDENTITY_INSERT forma_pagamento ON;
+GO
+INSERT INTO forma_pagamento (id_forma_pagamento, descricao) VALUES
+    (1, 'Dinheiro'),
+    (2, 'Pix'),
+    (3, 'Cartão de Débito'),
+    (4, 'Cartão Crédito à Vista'),
+    (5, 'Cartão Crédito 2x'),
+    (6, 'Cartão Crédito 3x'),
+    (7, 'Cartão Crédito 4x'),
+    (8, 'Cartão Crédito 5x'),
+    (9, 'Cartão Crédito 6x'),
+    (10, 'Cartão Crédito 10x'),
+    (11, 'Cartão Crédito 12x'),
+    (12, 'Boleto Bancário'),
+    (13, 'Transferência TED'),
+    (14, 'Transferência DOC'),
+    (15, 'Mercado Pago'),
+    (16, 'PicPay'),
+    (17, 'PayPal'),
+    (18, 'Link de Pagamento'),
+    (19, 'Faturado 30 Dias'),
+    (20, 'Crédito em Loja');
+GO
+SET IDENTITY_INSERT forma_pagamento OFF;
 GO
 
 SET IDENTITY_INSERT peca ON;
