@@ -23,7 +23,7 @@ INSERT INTO cliente (id_cliente, nome, cpf, email, telefone, dt_cadastro) VALUES
     (17, 'Matheus Henrique Duarte', '91862043515', 'matheus.duarte@hotmail.com', '48996478210', '2025-07-04'),
     (18, 'Renata Carvalho Medeiros', '30759281432', 'renata.medeiros@gmail.com', '48991594063', '2025-08-19'),
     (19, 'Fábio Júnior Bastos', '67204195876', NULL, '48984621190', '2025-09-07'),
-    (20, 'Vanessa Dias Gonçalves', '18593470297', 'vanessa.goncalves@outlook.com', '48998857341', '2025-10-23'),
+    (20, 'Vanessa Dias Gonçalves', '18593470297', 'vanessa.goncalves@outlook.com', NULL, '2025-10-23'),
     (21, 'Rodrigo César Nogueira', '52976038465', 'rodrigo.nogueira@gmail.com', '47991426809', '2025-11-15'),
     (22, 'Tatiane Freitas Monteiro', '84610925702', 'tatiane.monteiro@gmail.com', '48996214930', '2026-01-12'),
     (23, 'Henrique Morais Antunes', '09348261533', 'henrique.antunes@gmail.com', '48999742258', '2026-02-20'),
@@ -136,7 +136,7 @@ INSERT INTO tecnico (id_tecnico, nome, cpf, especialidade, dt_admissao, ativo) V
     (17, 'Letícia Maria Bez', '18946035242', 'Atendimento Técnico e Triagem', '2025-08-01', DEFAULT),
     (18, 'Sérgio Antônio Meller', '60273581902', 'Hardware Geral', '2020-05-11', 0),
     (19, 'Renan Oliveira Darós', '34598127023', 'Software e Redes', '2021-09-06', 0),
-    (20, 'Cláudio Henrique Savio', '91402763840', 'Manutenção de Desktops', '2022-03-21', 0);
+    (20, 'Cláudio Henrique Savio', '91402763840', NULL, '2022-03-21', 0);
 GO
 SET IDENTITY_INSERT tecnico OFF;
 GO
@@ -276,8 +276,8 @@ INSERT INTO peca (id_peca, id_fornecedor, id_categoria_peca, nome, preco, estoqu
     (22, 2, 16, 'Placa Wi-Fi M.2 Dual Band AC + Bluetooth', 115.00, 13, 4, '2025-02-19'),
     (23, 12, 17, 'Cabo Flat de Vídeo LVDS/eDP 30 Pinos', 68.00, 8, 4, '2025-03-08'),
     (24, 13, 18, 'Par de Dobradiças Metálicas Notebook 15.6', 79.90, 12, 4, '2025-03-22'),
-    (25, 9, 19, 'Conector DC Jack com Chicote Universal', 45.00, 3, 6, '2025-04-10'),
-    (26, 7, 20, 'Adaptador Caddy 9.5mm para Segundo SSD', 38.00, 15, 4, DEFAULT);
+    (25, 9, 19, 'Conector DC Jack com Chicote Universal', 45.00, DEFAULT, 6, '2025-04-10'),
+    (26, 7, 20, 'Adaptador Caddy 9.5mm para Segundo SSD', 38.00, 15, DEFAULT, DEFAULT);
 GO
 SET IDENTITY_INSERT peca OFF;
 GO
